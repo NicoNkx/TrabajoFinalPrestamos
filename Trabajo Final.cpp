@@ -165,15 +165,27 @@ int eliminar_recursos(){
     cout << "Ingrese el codigo del recurso a eliminar: ";
     cin >> codigo ;
     int puesto ;
+	int bol = 0;
     for(int i = 0; i < cr; i++){
         if (Recursos[i].codigo == codigo){
             puesto = i;
         }
+
+		if( (strcmp(Recursos[i].prestado, "Prestado") == 0)   &&  (Recursos[i].codigo == codigo)){
+			bol = 1;
+		}
+
+
     }
 
-    auto elem_to_remove = Recursos.begin() + puesto;
-    Recursos.erase(elem_to_remove);
-    cr--;
+    if(bol == 0){
+    	Recursos.erase(Recursos.begin() + puesto);
+    	cr--;
+		cout << "\n\nrecurso borrado\n\n";
+	}else{
+		cout << "\n\nrecurso esta prestado no se puede eliminar\n\n";
+
+	}
 
 }
 
@@ -273,6 +285,7 @@ int mostrar_prestamo(){
 
 int eliminar_prestamo(){
     
+    mostrar_recursos();
     int codigo;
     cout << "Ingrese el codigo del recurso a devolver: ";
     cin >> codigo;
